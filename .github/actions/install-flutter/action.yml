@@ -1,0 +1,32 @@
+name: Install Flutter
+description: Installs Flutter through FVM
+runs:
+  using: "composite"
+  steps:
+    - name: Configure Homebrew path
+      shell: bash
+      run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          echo "/home/linuxbrew/.linuxbrew/bin" >> "${GITHUB_PATH}"
+          echo "HOMEBREW_PATH=/home/linuxbrew/.linuxbrew" >> $GITHUB_ENV
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          echo "HOMEBREW_PATH=$(brew --prefix)" >> $GITHUB_ENV
+        else
+          echo "$RUNNER_OS not supported"
+          exit 1
+        fi
+
+    - name: Set Flutter version values
+      shell: bash
+      run: |
+        brew install jq
+        FLUTTER_VERSION=$(jq -r '.flutterSdkVersion' .fvm/fvm_config.json)
+        echo "FLUTTER_VERSION=$FLUTTER_VERSION" >> $GITHUB_ENV
+
+    - name: Install Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        cache: true
+        cache-key: "flutter-:os:-:channel:-:version:-:arch:"
+        cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
