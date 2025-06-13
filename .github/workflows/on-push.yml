@@ -7,19 +7,16 @@ jobs:
   test:
     runs-on: macos-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - name: Set up Dart
-        uses: dart-lang/setup-dart@v1
-        with:
-          sdk: '3.5.3'
+      - name: Install Flutter
+        uses: ./.github/actions/install-flutter
 
       - name: Install dependencies
-        run: dart pub get
+        run: |
+          fvm flutter pub get
 
       - name: Run tests
-        run: dart test
-
-      - name: Analyze code
-        run: dart analyze
+        run: |
+          fvm flutter test --coverage
