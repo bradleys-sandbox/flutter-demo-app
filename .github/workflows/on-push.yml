@@ -20,6 +20,7 @@ jobs:
           chmod 600 ~/.ssh/github_actions
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add ~/.ssh/github_actions
+          ssh-add -l -E sha256
 
       - name: Install Flutter
         uses: ./.github/actions/install-flutter
