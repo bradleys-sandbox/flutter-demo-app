@@ -10,17 +10,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Add SSH key
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          echo "${{ secrets.APP_READ_ACCESS_REPOSITORIES_PRIVATE_KEY }}" > ~/.ssh/github_actions
-          chmod 600 ~/.ssh/github_actions
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add ~/.ssh/github_actions
-          ssh-add -l -E sha256
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.APP_READ_ACCESS_REPOSITORIES_PRIVATE_KEY }}
 
       - name: Install Flutter
         uses: ./.github/actions/install-flutter
