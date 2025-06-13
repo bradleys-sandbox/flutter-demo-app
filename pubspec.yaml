@@ -36,6 +36,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  flutter_demo_plugin:
+    git:
+      url: git@github.com:flutter-sandbox/flutter-demo-plugin.git
+      ref: main
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
