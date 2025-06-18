@@ -22,7 +22,7 @@ jobs:
 
       - name: Add token to pub
         run: |
-          dart pub token add git@github.com:flutter-sandbox/flutter-demo-plugin.git --env-var ${{steps.get_workflow_token.outputs.token}}
+          dart pub token add "git@github.com:flutter-sandbox/flutter-demo-plugin.git" --env-var ${{steps.get_workflow_token.outputs.token}}
 
       - name: Install dependencies
         run: |
