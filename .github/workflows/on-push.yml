@@ -20,11 +20,9 @@ jobs:
       - name: Install Flutter
         uses: ./.github/actions/install-flutter
 
-      - name: Add token to pub
-        run: |
-          dart pub token add https://github.com/flutter-sandbox/flutter-demo-plugin.git --env-var ${{steps.get_workflow_token.outputs.token}}
-
       - name: Install dependencies
+        env:
+          TOKEN_VAR: ${{ steps.get_workflow_token.outputs.token }}
         run: |
           dart pub get
 
