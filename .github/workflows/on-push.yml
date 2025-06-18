@@ -10,19 +10,19 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - uses: shimataro/ssh-key-action@v2
+      - name: Get Token
+        id: get_workflow_token
+        uses: peter-murray/workflow-application-token-action@v4
         with:
-          key: ${{ secrets.APP_READ_ACCESS_REPOSITORIES_PRIVATE_KEY }}
-          name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-
-      - uses: actions/checkout@v4
-        with:
-          name: git@github:com:flutter-sandbox/flutter-demo-plugin:git
-          ref: main
+          application_id: ${{ secrets.APP_READ_ACCESS_REPOSITORIES_ID }}
+          application_private_key: ${{ secrets.APP_READ_ACCESS_REPOSITORIES_PRIVATE_KEY }}
 
       - name: Install Flutter
         uses: ./.github/actions/install-flutter
+
+      - name: Add token to pub
+        run: |
+          dart pub token add git@github.com:flutter-sandbox/flutter-demo-plugin.git --env-var ${{steps.get_workflow_token.outputs.token}}
 
       - name: Install dependencies
         run: |
