@@ -1,3 +1,5 @@
+name: 'Build and upload to Browserstack'
+
 on:
   workflow_dispatch:
     inputs:
@@ -16,3 +18,5 @@ on:
         - dev
         - acc
         - prod
+      environment:
+        type: environment
