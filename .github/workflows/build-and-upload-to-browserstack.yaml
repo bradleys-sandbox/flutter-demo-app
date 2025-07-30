@@ -1,6 +1,8 @@
 name: 'Build and upload to Browserstack'
 
 on:
+  push: 
+    branches: [main]
   workflow_dispatch:
     inputs:
       platform:
@@ -10,6 +12,7 @@ on:
         options:
         - ios
         - android
+        - both
       flavor:
         description: 'Flavor'
         required: true
