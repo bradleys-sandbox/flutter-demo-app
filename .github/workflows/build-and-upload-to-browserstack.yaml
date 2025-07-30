@@ -1,9 +1,18 @@
 on:
   workflow_dispatch:
     inputs:
-      os:
+      platform:
+        description: 'Platform' 
         required: true
         type: choice
         options:
         - ios
         - android
+      flavor:
+        description: 'Flavor'
+        required: true
+        type: choice
+        options:
+        - dev
+        - acc
+        - prod
