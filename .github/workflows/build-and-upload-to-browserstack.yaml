@@ -20,3 +20,11 @@ on:
         - prod
       environment:
         type: environment
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Print inputs
+      run: |
+          echo "Platform: ${{inputs.platform}}"
