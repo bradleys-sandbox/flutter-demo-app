@@ -1,0 +1,9 @@
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        required: true
+        type: choice
+        options:
+        - ios
+        - android
